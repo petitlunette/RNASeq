@@ -206,7 +206,7 @@ submod_df %>%
 
 #functional annotation with gprofiler2
 results <- gconvert(query = all_gs$V1, organism = "mtruncatula", target = "ENSG")
-matched_genes <- results[, -c(1:3)]
+matched_genes <- results[, -c(1:3)] #look through this for PR genes and compare to up/down reg gene lists
 
 genes_turq <- module_df$gene_id[module_df$colors == "turquoise"]
 genes_yellow <- module_df$gene_id[module_df$colors == "yellow"]
@@ -252,10 +252,25 @@ publish_gosttable(gost_blue,
                   show_columns = c("source", "term_name", "term_size", "intersection_size"),
                   filename = NULL)
 
-publish_gostplot(pf1, highlight_terms = c(#terms of interest), 
-                 width = 20, height = 5, filename = "gostplot+table_blue.pdf")
-publish_gostplot(pf2, highlight_terms = c(#terms of interest), 
-                 width = 20, height = 5, filename = "gostplot+table_blue.pdf")
+publish_gostplot(pf1, highlight_terms = c("GO:0006468",
+                                            "GO:0016310",
+                                            "GO:0005886",
+                                            "GO:0071944",
+                                            "GO:0004672",
+                                            "GO:0003824",
+                                            "GO:0016773",
+                                            "GO:0020037",
+                                            "GO:0016301",
+                                            "GO:0016491",
+                                            "GO:0046906",
+                                            "GO:0004674",
+                                            "GO:0030246",
+                                            "GO:0043167",
+                                            "KEGG:00940",
+                                            "KEGG:01110"), 
+                   width = 15, height = 10, filename = "gostplot+table_turq_toponly.pdf")
+publish_gostplot(pf2, highlight_terms = c("GO:0016310", "GO:0006796", "GO:0016301", "GO:0016772", "GO:0030247", "GO:0033770", "GO:0030246", "GO:0003824", "GO:0016705"), 
+                   width = NA, height = NA, filename = "gostplot+table_blue.pdf" )
 
 
 #create gem file for cytoscape
