@@ -303,3 +303,18 @@ gem_blue$FDR <- gem_blue$p.Val
 gem_blue$Phenotype = "+1"
 gem_blue <- gem_blue[,c("GO.ID", "Description", "p.Val", "FDR", "Phenotype", "Genes")]
 write.table(gem_blue, file = "gProfiler_gem_blue.txt", sep = "\t", quote = F, row.names = F)
+
+gostgem_pr <- gost(
+  query = prgene$GeneID,
+  organism = "mtruncatula", 
+  evcodes = TRUE, 
+  multi_query = FALSE, 
+  sources = c("GO", "REAC", "MIRNA", "CORUM", "HP", "HPA", "WP"),
+  user_threshold = 0.05,  # P-value threshold for significance
+  ordered_query = FALSE)
+gem_pr <- gostgem_pr$result[,c("term_id", "term_name", "p_value", "intersection")]
+colnames(gem_pr) <- c("GO.ID", "Description", "p.Val", "Genes")
+gem_pr$FDR <- gem_pr$p.Val
+gem_pr$Phenotype = "+1"
+gem_pr <- gem_pr[,c("GO.ID", "Description", "p.Val", "FDR", "Phenotype", "Genes")]
+write.table(gem_pr, file = "gProfiler_gem_pr.txt", sep = "\t", quote = F, row.names = F)
